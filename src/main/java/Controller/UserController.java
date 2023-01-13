@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -17,11 +19,14 @@ public class UserController {
 
     private final UserService userService;
 
-
     @GetMapping
-    public ResponseEntity<UserDTO> getUser(){
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<UserDTO> getUserByName(@RequestParam String username){
+        UserDTO name = userService.getUserByName(username);
+        if (name == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Username not found");
+        }
+        return new ResponseEntity<>(name, HttpStatus.OK);
     }
 
 }
