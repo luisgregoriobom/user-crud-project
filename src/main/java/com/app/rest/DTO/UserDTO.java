@@ -1,6 +1,6 @@
-package DTO;
+package com.app.rest.DTO;
 
-import Model.UserModel;
+import com.app.rest.Model.UserModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
