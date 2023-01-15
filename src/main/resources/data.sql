@@ -1,7 +1,1 @@
-CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+INSERT INTO usuarios(cep, birth_date, city, name, number, public_place) VALUES('1234', '2020-02-02', 'CAXIAS', 'luis', 123, 'asdhjasj');

@@ -1,12 +1,25 @@
-package Model;
+package com.app.rest.Model;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 import java.util.Date;
-
-@Data
+@Getter
+@Setter
+@Entity
+@Table(name = "usuarios")
+@NoArgsConstructor
 public class UserModel {
 
+    @jakarta.persistence.Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private Date birthDate;
     private String publicPlace;
@@ -28,8 +41,12 @@ public class UserModel {
         this.city = city;
     }
 
-    public UserModel(){
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public Long getId() {
+        return id;
     }
 }
 
