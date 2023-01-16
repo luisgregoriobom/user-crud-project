@@ -16,11 +16,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    public UserDTO getUserByName(String username){
-//        UserModel usernameOptional = userRepository.findByNameContaining(username);
-//        return usernameOptional.map(UserDTO::convertToUserDto).orElse(null);
-//    }
-
     public UserDTO getUser(String username){
         List<UserModel> opt = userRepository.findByNameContaining(username);
         if(opt.isEmpty()){

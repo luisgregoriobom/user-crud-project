@@ -19,6 +19,9 @@ public class UserController {
     @GetMapping("/username")
     public ResponseEntity<UserDTO> getUserByParam(@RequestParam String username){
         UserDTO name = userService.getUser(username);
+        if(name == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
         return new ResponseEntity<>(name, HttpStatus.OK);
     }
 
@@ -30,21 +33,6 @@ public class UserController {
         }
         return ResponseEntity.ok().build();
     }
-
-//    @GetMapping("/teste")
-//    public ResponseEntity<UserDTO> getAllUsers(@RequestParam String username){
-//        UserDTO name = userService.getUserByName(username);
-//        return new ResponseEntity<>(name, HttpStatus.OK);
-//    }
-
-//    public ResponseEntity<UserDTO> getUserByName(@PathVariable String username){
-//        UserDTO name = userService.getUserByName(username);
-//        if (name == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                    "Username not found");
-//        }
-//        return new ResponseEntity<>(name, HttpStatus.OK);
-//    }
 
 
 
