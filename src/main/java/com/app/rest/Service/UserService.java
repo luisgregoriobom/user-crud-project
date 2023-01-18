@@ -7,8 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,12 +18,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserDTO getUser(String username){
+    public List<UserDTO> getUser(String username){
         List<UserModel> opt = userRepository.findByNameContaining(username);
+
         if(opt.isEmpty()){
             return null;
         }
-        return UserDTO.convertToUserDto(opt.get(0));
+        return opt.stream().map(e -> UserDTO.convertToUserDto(e)).collect(Collectors.toList());
     }
 
     public UserDTO removeUser(Long id) {
@@ -40,12 +43,14 @@ public class UserService {
     public UserModel update(Long id, UserModel user) {
         UserModel existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(id.toString()));
-        existingUser.setName(user.getName());
-        existingUser.setBirthDate(user.getBirthDate());
-        existingUser.setPublicPlace(user.getPublicPlace());
-        existingUser.setCEP(user.getCEP());
-        existingUser.setNumber(user.getNumber());
-        existingUser.setCity(user.getCity());
+
+        Optional.ofNullable(user.getName()).ifPresent(existingUser::setName);
+        Optional.ofNullable(user.getBirthDate()).ifPresent(existingUser::setBirthDate);
+        Optional.ofNullable(user.getPublicPlace()).ifPresent(existingUser::setPublicPlace);
+        Optional.ofNullable(user.getCEP()).ifPresent(existingUser::setCEP);
+        Optional.ofNullable(user.getNumber()).ifPresent(existingUser::setNumber);
+        Optional.ofNullable(user.getCity()).ifPresent(existingUser::setCity);
+
         return userRepository.save(existingUser);
     }
 }
