@@ -32,4 +32,20 @@ public class UserService {
         }
         return null;
     }
+
+    public UserModel save(UserModel user) {
+        return userRepository.save(user);
+    }
+
+    public UserModel update(Long id, UserModel user) {
+        UserModel existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id.toString()));
+        existingUser.setName(user.getName());
+        existingUser.setBirthDate(user.getBirthDate());
+        existingUser.setPublicPlace(user.getPublicPlace());
+        existingUser.setCEP(user.getCEP());
+        existingUser.setNumber(user.getNumber());
+        existingUser.setCity(user.getCity());
+        return userRepository.save(existingUser);
+    }
 }
